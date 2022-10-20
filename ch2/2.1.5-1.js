@@ -1,6 +1,6 @@
 var candyMachine = {
   status: {
-    name: 'node',
+    name: "node",
     count: 5,
   },
   getCandy: function () {
