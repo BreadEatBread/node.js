@@ -15,7 +15,13 @@ class List {
       let result = callback(cur); // 2-1. 모든 요소에 대해서 callback 함수를 실행한 결과
       prev.push(result); // 2-2. 결과값을 계속 배열에 추가
       return prev; // 2-3. 현재 값이 추가된 배열 반환
-    }, []); // 1. 빈 배열에서 시작
+    }, new List()); // 1. 빈 배열에서 시작
+  }
+  // 새로운 요소를 맨 뒤에 추가
+  push(element) {
+    this[this.length] = element;
+    this.length += 1;
+    return this.length;
   }
   reduce(callback, initialValue = null) {
     //initialValue가 없으면 첫번째 요소 this[0]을 가져오고 for문을 1부터 시작
