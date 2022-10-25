@@ -41,7 +41,7 @@ app.get("/", (req, res) => {
     .catch(console.error)
     .finally(() => connection.destroy());
 });
-app.listen(3000, () => {
+app.listen(3333, () => {
   console.log(process.env);
-  console.log("Listening: http://localhost:3000");
+  console.log("Listening: http://localhost:3333");
 });
