@@ -1,28 +1,30 @@
-const createQueue = (max) => ({
-  array: new Array(max),
-  length: max,
-  size: 0,
-  front: -1,
-  rear: -1,
-  add(value) {
-    if (this.size == max) {
-      throw Error("The queue is full");
-    }
-    this.size += 1;
-    this.rear = (this.rear + 1) % max;
-    this.array[this.rear] = value;
-  },
-  delete() {
-    if (this.size == 0) {
-      throw Error("The queue is empty");
-    }
-    this.size -= 1;
-    this.front = (this.front + 1) % max;
-    return this.array[this.front];
-  },
-});
+import assert from 'assert'; // 조건이 false 면 오류 발생
 
-let queue1 = createQueue(3);
+class Queue {
+constructor(max) {
+  this.array = new Array(max);
+  this.length = max;
+  this.size = 0;
+  this.front = -1;
+  this.rear = -1;
+}
+
+  add(value) {
+    assert(this.size < this.length, 'The queue is full.');    
+    this.size += 1;
+    this.rear = (this.rear + 1) % this.length;
+    this.array[this.rear] = value;
+  }
+
+  delete() {
+    assert(this.size > 0, 'The queue is empty');
+    this.size -= 1;
+    this.front = (this.front + 1) % this.length;
+    return this.array[this.front];
+  }
+};
+
+let queue1 = new Queue(3);
 queue1.add(4);
 queue1.add(6);
 queue1.add(1);
@@ -39,7 +41,4 @@ if (queue1.size > 0) {
   console.warn("The queue is empty.");
 }
 
-let queue2 = createQueue(2);
-queue2.add(1);
-queue2.add(2);
-queue2.add(8);
+export default Queue; // import Queue from './Queue.mjs';
