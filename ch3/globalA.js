@@ -1,0 +1,1 @@
+mudul.exports = () => global.Message;
