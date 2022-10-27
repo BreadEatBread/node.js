@@ -1,20 +1,25 @@
-import Queue from './Queue.mjs'
+import Queue from "./Queue.mjs";
 
 let queue = new Queue(10);
 
 const timeout = setTimeout(() => {
-  queue.add('1.5초 후 실행');
+  queue.add(() => {
+    console.log("1.5초 후 추가");
+  });
 }, 1500);
 
 const interval = setInterval(() => {
-  console.log('1초마다 후 실행');
+  console.log("1초마다 Polling");
   if (queue.size > 0) {
-    console.log(queue.delete());
+    let task = queue.delete();
+    task();
   }
 }, 1000);
 
 const timeout2 = setTimeout(() => {
-  queue.add('실행되지 않습니다.');
+  queue.add(() => {
+    console.log("실행되지 않습니다.");
+  });
 }, 3000);
 
 setTimeout(() => {
@@ -23,11 +28,15 @@ setTimeout(() => {
 }, 2500);
 
 const immediate = setImmediate(() => {
-  console.log('즉시 실행');
+  queue.add(() => {
+    console.log("즉시 추가");
+  });
 });
 
 const immediate2 = setImmediate(() => {
-  console.log('실행되지 않습니다.');
+  queue.add(() => {
+    console.log("실행되지 않습니다.");
+  });
 });
 
 clearImmediate(immediate2);

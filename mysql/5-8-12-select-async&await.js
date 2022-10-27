@@ -26,7 +26,7 @@ app.get("/", async (req, res) => {
     body += `<h2>${title}</h2>`;
     body += description;
   });
-  body += "<h1>multi row</h2>";
+  body += "<h1>multiple row</h2>";
   let [results1, fields1] = await connection.query("SELECT * FROM topic");
   console.log({results1, fields1});
   results1.forEach((row) => {
