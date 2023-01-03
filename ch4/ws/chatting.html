@@ -1,0 +1,29 @@
+<!-- node.js/ch04/ws/chatting.html -->
+<form name="publish">
+    <input type="text" name="message" autocomplete="off" maxlength="50" />
+    <input type="submit" value="전송" />
+  </form>
+  <div id="messages"></div>
+  
+  <script>
+    var nickname;
+    cookieStore.get('nick').then(({ value }) => {
+      nickname = value;
+      window.messages.innerHTML = `<div>${value}님 환영합니다.</div>`;
+      history.pushState({}, '', '/'); // URL을 '/' 경로로 바꿔서 파라미터 삭제
+    });
+  
+    let socket = new WebSocket('ws://localhost:8888');
+    socket.onmessage = ({ data }) => {
+      window.messages.innerHTML += `<div>${data}</div>`;
+    };
+  
+    document.forms.publish.onsubmit = function () {
+      let data = this.message.value;
+      // nickname이 있을 때만 메시지 앞에 붙이기
+      data = nickname? `${nickname}: ${data}` : data;
+      socket.send(data);
+      this.message.value = '';
+      return false; // form이 submit 되는 것을 방지
+    };
+  </script>
